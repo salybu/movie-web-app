@@ -7,6 +7,7 @@ const initialState: MovieState = {
   movies: null,
   status: Status.Idle,
   error: null,
+  page: 1,
 };
 
 const movieSlice = createSlice({
@@ -19,8 +20,9 @@ const movieSlice = createSlice({
     },
     getMoviesSuccess(state, action) {
       const movies = action.payload;
-      state.movies = movies;
+      state.movies = state.movies ? state.movies?.concat(movies) : movies;
       state.status = Status.Success;
+      state.page = state.page + 1;
     },
     getMoviesFailure(state, action) {
       state.status = Status.Failure;
@@ -36,11 +38,12 @@ export const { getMoviesStart, getMoviesSuccess, getMoviesFailure } = movieSlice
 export const selectMovies = (state: RootState) => state.movies;
 
 // 비동기 메소드
-export const getMovies = async (dispatch: Dispatch) => {
+export const getMovies = async (dispatch: Dispatch, page: number) => {
   try {
     dispatch(getMoviesStart(null));
-    const data = await MovieService.getMovies();
-    const moviesOrigin = data.data.movies;
+    console.log('getMovies Before    ', page);
+    const data = await MovieService.getMovies(page);
+    const moviesOrigin = data?.data.movies;
     const movies = moviesOrigin.map((movie: any) => ({
       id: movie.id,
       title: movie.title,
@@ -49,7 +52,7 @@ export const getMovies = async (dispatch: Dispatch) => {
       year: movie.year,
       rating: movie.rating,
     }));
-    console.log(movies);
     dispatch(getMoviesSuccess(movies));
+    console.log('getMovies Success    ', page);
   } catch {}
 };
