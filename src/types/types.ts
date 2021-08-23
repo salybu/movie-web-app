@@ -2,6 +2,7 @@ export interface MovieState {
   movies: Movie[] | null;
   status: string;
   error: Error | null;
+  page: number;
 }
 
 export interface RootState {

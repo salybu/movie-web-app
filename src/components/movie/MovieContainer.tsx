@@ -3,11 +3,11 @@ import List from './list/List';
 import { useMovieHook } from './MovieHook';
 
 const MovieContainer = () => {
-  const { movies, status, error } = useMovieHook();
+  const { movies, status, error, page, target } = useMovieHook();
 
   return (
     <Template>
-      <List movies={movies} />
+      <List movies={movies} status={status} page={page} target={target} />
     </Template>
   );
 };
