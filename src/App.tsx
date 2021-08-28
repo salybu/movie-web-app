@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Home from 'pages/Home';
-import Nav from 'components/common/nav/Nav';
+import Nav from 'components/common/Nav';
 import { Provider } from 'react-redux';
 import store from 'redux/create';
-import Login from 'pages/Login';
+import SignIn from 'pages/SignIn';
+import SignUp from 'pages/SignUp';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <BrowserRouter>
         <Nav />
         <Route path='/' exact component={Home}></Route>
-        <Route path='/login' component={Login}></Route>
+        <Route path='/signin' component={SignIn}></Route>
+        <Route path='/signup' component={SignUp}></Route>
       </BrowserRouter>
     </Provider>
   );
