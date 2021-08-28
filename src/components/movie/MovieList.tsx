@@ -1,6 +1,6 @@
 import { Movie } from 'types/types';
 import React, { LegacyRef } from 'react';
-import Item from '../item/Item';
+import Item from './MovieItem';
 import { Status } from 'constants/constants';
 import { useRef } from 'react';
 

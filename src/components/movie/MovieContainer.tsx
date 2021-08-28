@@ -1,9 +1,9 @@
-import Template from 'components/common/template/Template';
-import List from './list/List';
-import { useMovieHook } from './MovieHook';
+import Template from 'components/common/Template';
+import List from './MovieList';
+import { useMovie } from './useMovie';
 
 const MovieContainer = () => {
-  const { movies, status, error, page, target } = useMovieHook();
+  const { movies, status, error, page, target } = useMovie();
 
   return (
     <Template>

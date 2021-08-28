@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovies, selectMovies } from 'redux/modules/movies';
 
-export const useMovieHook = () => {
+export const useMovie = () => {
   const dispatch = useDispatch();
   const { movies, status, error, page } = useSelector(selectMovies);
   const target = useRef<HTMLDivElement>(null);
