@@ -26,7 +26,7 @@ export const useMovie = () => {
       observer.observe(target.current as Element);
     }
     return () => observer?.disconnect();
-  }, [movies]);
+  }, [page]);
 
   const onInterSecting = (entries: any) => {
     entries.forEach((entry: any) => {

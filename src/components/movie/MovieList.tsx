@@ -1,7 +1,7 @@
 import { Movie } from 'types/types';
 import React, { LegacyRef } from 'react';
 import Item from './MovieItem';
-import { Status } from 'constants/constants';
+import { Status } from 'utils/constants';
 import { useRef } from 'react';
 
 interface ListProps {

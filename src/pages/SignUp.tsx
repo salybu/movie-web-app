@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import { ISignIn } from './SignIn';
-
-export interface ISignUp extends ISignIn {
-  pwConfirm: string;
-  name: string;
-  age: number;
-}
+import { ISignUp } from 'types/types';
 
 const initialInput: ISignUp = {
   id: '',

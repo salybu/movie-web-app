@@ -1,5 +1,5 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
-import { Status } from 'constants/constants';
+import { Status } from 'utils/constants';
 import { MovieState, RootState } from 'types/types';
 import MovieService from 'components/movie/MovieService';
 
