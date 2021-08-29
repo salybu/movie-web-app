@@ -4,3 +4,5 @@ export const Status = {
   Success: 'success',
   Failure: 'failure',
 };
+
+export const AUTH = 'auth';

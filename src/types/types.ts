@@ -5,7 +5,14 @@ export interface MovieState {
   page: number;
 }
 
+export interface AuthState {
+  isLogin: boolean | null;
+  status: string;
+  error: Error | null;
+}
+
 export interface RootState {
+  auth: AuthState;
   movies: MovieState;
 }
 
@@ -16,4 +23,15 @@ export interface Movie {
   img: string;
   rating: number;
   year: number;
+}
+
+export interface ISignIn {
+  id: string;
+  pw: string;
+}
+
+export interface ISignUp extends ISignIn {
+  pwConfirm: string;
+  name: string;
+  age: number;
 }
