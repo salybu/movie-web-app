@@ -46,7 +46,7 @@ export const getSignIn = async (dispatch: Dispatch, id: string, pw: string) => {
   } catch {}
 };
 
-export const logout = async (dispatch: Dispatch) => {
+export const logOut = async (dispatch: Dispatch) => {
   try {
     dispatch(getAuthSuccess(false));
   } catch {}

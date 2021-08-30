@@ -6,8 +6,15 @@ export const storage = {
   },
   get: (key: string) => {
     if (!sessionStorage) return null;
-    if (!sessionStorage[key]) return null;
+    if (!sessionStorage[key]) return '';
 
     return JSON.parse(sessionStorage[key]);
+  },
+  remove: (key: string) => {
+    if (!sessionStorage) return null;
+
+    if (sessionStorage[key]) {
+      sessionStorage.removeItem(key);
+    }
   },
 };
