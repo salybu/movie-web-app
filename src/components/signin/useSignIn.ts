@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getSignIn, selectAuth } from 'redux/modules/auth';
 import { ISignIn } from 'types/types';
+import { getSignInResult } from 'utils/api';
 import { AUTH } from 'utils/constants';
 import { storage } from 'utils/storage';
+import { SignInService } from '.';
 
 const initialSignIn: ISignIn = {
   id: '',
@@ -13,9 +13,8 @@ const initialSignIn: ISignIn = {
 
 const useLogin = () => {
   const [signIn, setSignIn] = useState<ISignIn>(initialSignIn);
-  const { isLogin } = useSelector(selectAuth);
+  const [isLogin, setIsLogin] = useState<string>(storage.get(AUTH));
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -24,20 +23,18 @@ const useLogin = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    getSignIn(dispatch, signIn.id, signIn.pw);
+    // const result = getSignInResult(signIn.id, signIn.pw);
+    // getSignIn(dispatch, signIn.id, signIn.pw);
+    const result = await SignInService.getSignIn(signIn.id, signIn.pw);
+    if (!result) {
+      alert('로그인에 실패했습니다');
+    } else {
+      storage.set(AUTH, result.toString());
+      history.push('/');
+    }
   };
 
-  useEffect(() => {
-    if (signIn.id != '') {
-      if (!isLogin) {
-        alert('로그인에 실패했습니다');
-      } else {
-        history.push('/');
-      }
-    }
-  }, [isLogin]);
-
-  return { signIn, handleChange, handleSubmit };
+  return { signIn, isLogin, setIsLogin, handleChange, handleSubmit };
 };
 
 export default useLogin;

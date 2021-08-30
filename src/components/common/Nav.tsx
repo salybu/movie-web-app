@@ -1,26 +1,30 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { selectAuth } from 'redux/modules/auth';
+import { useSignIn } from 'components/signin';
+import { useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { AUTH } from 'utils/constants';
 import { storage } from 'utils/storage';
 import './common.scss';
 
 const Nav = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
-  const { isLogin } = useSelector(selectAuth);
+  const location = useLocation();
+  const { isLogin, setIsLogin } = useSignIn();
+  // const [isLogin, setIsLogin] = useState<string>(storage.get(AUTH));
+  // const storageLogin = storage.get(AUTH);
 
   const movePage = (path: string) => {
     history.push(path);
   };
 
   const logout = () => {
-    //   const isLogin = storage.get(AUTH);
-    // console.log(isLogin);
-    dispatch(logout);
-    storage.set(AUTH, '');
+    storage.remove(AUTH);
+    setIsLogin(storage.get(AUTH));
     history.push('/signin');
   };
+
+  useEffect(() => {
+    setIsLogin(storage.get(AUTH));
+  }, [location.pathname]);
 
   return (
     <div className='container nav'>
@@ -29,23 +33,25 @@ const Nav = () => {
       </div>
       <ul className='nav_right nav_signin'>
         {!isLogin ? (
-          <li
-            onClick={() => {
-              movePage('/signin');
-            }}
-          >
-            로그인
-          </li>
+          <>
+            <li
+              onClick={() => {
+                movePage('/signin');
+              }}
+            >
+              로그인
+            </li>
+            <li
+              onClick={() => {
+                movePage('/signup');
+              }}
+            >
+              회원가입
+            </li>
+          </>
         ) : (
           <li onClick={logout}>로그아웃</li>
         )}
-        <li
-          onClick={() => {
-            movePage('/signup');
-          }}
-        >
-          회원가입
-        </li>
       </ul>
     </div>
   );

@@ -1,8 +1,12 @@
+import { Redirect } from 'react-router-dom';
 import { useSignIn } from 'components/signin';
-import React, { useEffect, useState } from 'react';
 
 function Signin() {
-  const { signIn, handleChange, handleSubmit } = useSignIn();
+  const { signIn, isLogin, handleChange, handleSubmit } = useSignIn();
+
+  if (isLogin) {
+    return <Redirect to='/' />;
+  }
 
   return (
     <div className='container'>
