@@ -18,20 +18,22 @@ export const getSignInResult = async (id: string, pw: string) => {
   }
 };
 
-export const signUp = (id: string, pw: string, pwConfirm: string, name: string, age: number) => {
-  firestore
+export const signUp = (id: string, pw: string, name: string, age: number) => {
+  const result = firestore
     .collection('users')
     .add({
       id: id,
       pw: pw,
-      pwConfirm: pwConfirm,
       name: name,
       age: age,
     })
     .then((docRef) => {
-      console.log('document written with ID');
+      // console.log('document written with ID');
+      return true;
     })
     .catch((error) => {
       console.log('Error adding document: ', error);
+      return false;
     });
+  return result;
 };
