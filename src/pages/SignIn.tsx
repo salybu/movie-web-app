@@ -1,7 +1,7 @@
 import { Redirect } from 'react-router-dom';
 import { useSignIn } from 'components/signin';
 
-function Signin() {
+function SignIn() {
   const { signIn, isLogin, handleChange, handleSubmit } = useSignIn();
 
   if (isLogin) {
@@ -22,4 +22,4 @@ function Signin() {
   );
 }
 
-export default Signin;
+export default SignIn;

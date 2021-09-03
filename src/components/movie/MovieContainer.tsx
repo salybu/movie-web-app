@@ -1,6 +1,5 @@
-import Template from 'components/common/Template';
-import List from './MovieList';
-import { useMovie } from './useMovie';
+import { Template } from 'components/common';
+import { List, useMovie } from '.';
 
 const MovieContainer = () => {
   const { movies, status, error, page, target } = useMovie();
