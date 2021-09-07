@@ -1,8 +1,6 @@
 import { Movie } from 'types/types';
 import React, { LegacyRef } from 'react';
 import Item from './MovieItem';
-import { Status } from 'utils/constants';
-import { useRef } from 'react';
 
 interface ListProps {
   movies: Movie[] | null;
@@ -23,7 +21,7 @@ const List: React.FC<ListProps> = ({ movies, status, page, target }) => {
   return (
     <ul style={{ listStyle: 'none', display: 'flex', flexWrap: 'wrap', padding: '0 20px' }}>
       {movies?.map((movie) => (
-        <Item title={movie.title} img={movie.img} year={movie.year} genres={movie.genres} />
+        <Item id={movie.id} title={movie.title} img={movie.img} year={movie.year} genres={movie.genres} />
       ))}
       <div ref={target} />
     </ul>
