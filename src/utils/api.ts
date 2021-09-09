@@ -18,7 +18,7 @@ export const getSignInResult = async (id: string, pw: string) => {
   }
 };
 
-export const signUp = (id: string, pw: string, name: string, age: number) => {
+export const signUp = (id: string, pw: string, name: string, age: number, level: string, cardNumber: number, address: string) => {
   const result = firestore
     .collection('users')
     .add({
@@ -26,6 +26,9 @@ export const signUp = (id: string, pw: string, name: string, age: number) => {
       pw: pw,
       name: name,
       age: age,
+      level: level,
+      cardNumber: cardNumber,
+      address: address,
     })
     .then((docRef) => {
       // console.log('document written with ID');
