@@ -50,7 +50,16 @@ const Nav = () => {
             </li>
           </>
         ) : (
-          <li onClick={logout}>로그아웃</li>
+          <>
+            <li
+              onClick={() => {
+                movePage('/member');
+              }}
+            >
+              회원 목록
+            </li>
+            <li onClick={logout}>로그아웃</li>
+          </>
         )}
       </ul>
     </div>
