@@ -1,19 +1,16 @@
 import { useHistory } from 'react-router';
 
-interface ItemProps {
+export interface ItemProps {
   id: number;
   title: string;
   img: string;
   year: number;
-  genres: Array<string>;
+  // genres: Array<string>;
+  genres: string;
 }
 
 const Item = ({ id, title, img, year, genres }: ItemProps) => {
   const history = useHistory();
-  let genrePrint: string = '';
-  genres.map((genre, index) => {
-    genrePrint += index !== genres.length - 1 ? genre + ', ' : genre;
-  });
 
   const moveToMovie = (id: number) => {
     history.push(`/movie/${id}`);
@@ -29,8 +26,7 @@ const Item = ({ id, title, img, year, genres }: ItemProps) => {
       <h2>{title}</h2>
       <img src={img}></img>
       <div>{year}</div>
-      <div>{genrePrint}</div>
-      <div>{id}</div>
+      <div>{genres}</div>
     </li>
   );
 };

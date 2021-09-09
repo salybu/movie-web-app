@@ -2,6 +2,7 @@ import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { Status } from 'utils/constants';
 import { MovieState, RootState } from 'types/types';
 import MovieService from 'components/movie/MovieService';
+import { printGenres } from 'utils/movie';
 
 const initialState: MovieState = {
   movies: null,
@@ -41,18 +42,16 @@ export const selectMovies = (state: RootState) => state.movies;
 export const getMovies = async (dispatch: Dispatch, page: number) => {
   try {
     dispatch(getMoviesStart(null));
-    console.log('getMovies Before    ', page);
     const data = await MovieService.getMovies(page);
     const moviesOrigin = data?.data.movies;
     const movies = moviesOrigin.map((movie: any) => ({
       id: movie.id,
       title: movie.title,
       img: movie.medium_cover_image,
-      genres: movie.genres,
+      genres: printGenres(movie.genres),
       year: movie.year,
       rating: movie.rating,
     }));
     dispatch(getMoviesSuccess(movies));
-    console.log('getMovies Success    ', page);
   } catch {}
 };

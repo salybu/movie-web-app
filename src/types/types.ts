@@ -19,7 +19,8 @@ export interface RootState {
 export interface Movie {
   id: number;
   title: string;
-  genres: Array<string>;
+  // genres: Array<string>;
+  genres: string;
   img: string;
   rating: number;
   year: number;
