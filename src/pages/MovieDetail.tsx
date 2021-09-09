@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
+import { MovieDetail as MovieDetailComponent } from 'components/movie';
 
 const MovieDetail: React.FC<RouteComponentProps> = (props): JSX.Element => {
-  const [movie, setMovie] = useState();
-
-  useEffect(() => {}, []);
-
-  const { location, match } = props;
-  console.log(match);
-  const params = match.params;
+  const { match } = props;
   const id = (match.params as any)?.id;
-  return <div>여기는 무비 디테일 id는 {id}</div>;
+
+  return (
+    <>
+      <MovieDetailComponent id={id} />
+    </>
+  );
 };
 
 export default withRouter(MovieDetail);
