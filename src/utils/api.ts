@@ -1,3 +1,4 @@
+import { IMember } from 'components/admin/Member';
 import { firestore } from 'firebase.js';
 
 export const getSignInResult = async (id: string, pw: string) => {
@@ -39,4 +40,14 @@ export const signUp = (id: string, pw: string, name: string, age: number, level:
       return false;
     });
   return result;
+};
+
+export const getAllUsers = async () => {
+  const usersRef = firestore.collection('users');
+
+  const user = await usersRef.get().then((snapshot) => {
+    return snapshot.docs.map((doc) => doc.data());
+  });
+
+  return user as IMember[];
 };
