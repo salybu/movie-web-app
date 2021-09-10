@@ -1,35 +1,32 @@
-import { Template } from 'components/common';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getAllUsers } from 'utils/api';
+import { Member as MemberComponent } from 'components/admin';
+import { IMember } from 'components/admin/Member';
 
 const Member = () => {
+  const [members, setMembers] = useState<IMember[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPosts, setCurrentPosts] = useState<IMember[]>([]); // 여기에 initial 값 [] 를 안주면 IMember[]|undefined 돼서 할당이 안되네
+  const [postsPerPage] = useState<number>(10);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+
+  useEffect(() => {
+    (async () => {
+      const result = await getAllUsers();
+      setMembers(result);
+    })();
+  }, []);
+
+  useEffect(() => {
+    setCurrentPosts(members.slice(indexOfFirstPost - indexOfLastPost));
+  }, [members]);
+
   return (
-    <Template>
-      <div className='member_page'>
-        <h2>회원 목록</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>아이디</th>
-              <th>이름</th>
-              <th>권한</th>
-              <th>주소</th>
-              <th>나이</th>
-              <th>카드번호</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>idididididid</td>
-              <td>name name name name name</td>
-              <td>auth auth auth auth</td>
-              <td>address address address address</td>
-              <td>30</td>
-              <td>0030 0030 0200 0102</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </Template>
+    <>
+      <MemberComponent members={currentPosts} />
+    </>
   );
 };
 

@@ -1,5 +1,51 @@
-const Member = () => {
-  return <div></div>;
+import { Template } from 'components/common';
+
+export interface IMember {
+  id: string;
+  pw: string;
+  name: string;
+  level: string;
+  address: string;
+  age: number;
+  cardNumber: number;
+}
+
+export interface IMemberProps {
+  members: IMember[];
+}
+
+const Member: React.FC<IMemberProps> = ({ members }): JSX.Element => {
+  return (
+    <Template>
+      <div className='member_page'>
+        <h2>회원 목록</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>아이디</th>
+              <th>이름</th>
+              <th>레벨</th>
+              <th>주소</th>
+              <th>나이</th>
+              <th>카드번호</th>
+            </tr>
+          </thead>
+          <tbody>
+            {members.map((member) => (
+              <tr>
+                <td>{member.id}</td>
+                <td>{member.name}</td>
+                <td>{member.level}</td>
+                <td>{member.address}</td>
+                <td>{member.age}</td>
+                <td>{member.cardNumber}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Template>
+  );
 };
 
 export default Member;
