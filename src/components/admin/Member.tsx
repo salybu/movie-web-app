@@ -1,5 +1,3 @@
-import { Template } from 'components/common';
-
 export interface IMember {
   id: string;
   pw: string;
@@ -16,7 +14,7 @@ export interface IMemberProps {
 
 const Member: React.FC<IMemberProps> = ({ members }): JSX.Element => {
   return (
-    <Template>
+    <>
       <div className='member_page'>
         <h2>회원 목록</h2>
         <table>
@@ -44,7 +42,7 @@ const Member: React.FC<IMemberProps> = ({ members }): JSX.Element => {
           </tbody>
         </table>
       </div>
-    </Template>
+    </>
   );
 };
 

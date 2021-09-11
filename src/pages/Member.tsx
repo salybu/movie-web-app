@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getAllUsers } from 'utils/api';
-import { Member as MemberComponent } from 'components/admin';
+import { Member as MemberComponent, Pagination } from 'components/admin';
 import { IMember } from 'components/admin/Member';
+import { Template } from 'components/common';
 
 const Member = () => {
   const [members, setMembers] = useState<IMember[]>([]);
@@ -24,9 +25,10 @@ const Member = () => {
   }, [members]);
 
   return (
-    <>
+    <Template>
       <MemberComponent members={currentPosts} />
-    </>
+      <Pagination postsLength={members?.length} postsPerPage={postsPerPage} />
+    </Template>
   );
 };
 
