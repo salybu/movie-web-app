@@ -11,9 +11,9 @@ function Home() {
   }
 
   return (
-    <div>
+    <>
       <MovieContainer />
-    </div>
+    </>
   );
 }
 
