@@ -1,7 +1,7 @@
 import { useSignIn } from 'components/signin';
 import { useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { AUTH } from 'utils/constants';
+import { AUTH, USER } from 'utils/constants';
 import { storage } from 'utils/storage';
 import './common.scss';
 
@@ -18,6 +18,7 @@ const Nav = () => {
 
   const logout = () => {
     storage.remove(AUTH);
+    storage.remove(USER);
     setIsLogin(storage.get(AUTH));
     history.push('/signin');
   };
