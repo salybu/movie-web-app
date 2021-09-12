@@ -5,7 +5,7 @@ import { Template } from 'components/common';
 import { printGenres } from 'utils/movie';
 import { BsHeartFill, BsFillStarFill } from 'react-icons/bs';
 import { MdNotInterested } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 export interface IMovie {
   title: string;
@@ -24,8 +24,11 @@ export interface IMovieId {
 }
 
 const MovieDetail: React.FC<IMovieId> = ({ id }) => {
-  const [movie, setMovie] = useState<IMovie>();
+  const [movie, setMovie] = useState<IMovie | null>();
   const [movieList, setMovieList] = useState<ItemProps[]>([]);
+
+  const { location } = useHistory();
+  console.log(location);
 
   const serviceMovie = async (id: number) => {
     const resMovie = await MovieService.getMovie(id);
@@ -57,10 +60,17 @@ const MovieDetail: React.FC<IMovieId> = ({ id }) => {
     setMovieList(movieList);
   };
 
+  // useEffect(() => {
+  //   serviceMovie(id);
+  //   suggestMovie(id);
+  // }, []);
+
   useEffect(() => {
+    setMovie(null);
+    setMovieList([]);
     serviceMovie(id);
     suggestMovie(id);
-  }, []);
+  }, [location]);
 
   if (!movie || !movieList) {
     return <Template>로딩 중</Template>;
@@ -96,7 +106,7 @@ const MovieDetail: React.FC<IMovieId> = ({ id }) => {
         <h2 style={{ marginBottom: '0' }}>관련 추천 영화</h2>
         <ul style={{ display: 'flex', margin: '0', padding: '0 0 3rem' }}>
           {movieList.map((movie) => (
-            <Link to={`/movie/${id}`}>
+            <Link to={`/movie/${movie.id}`}>
               <li style={{ textDecoration: 'none', width: '280px', textAlign: 'center' }}>
                 <h2>{movie.title}</h2>
                 <img src={movie.img}></img>
