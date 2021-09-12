@@ -8,7 +8,13 @@ const Member = () => {
   const [members, setMembers] = useState<IMember[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentPosts, setCurrentPosts] = useState<IMember[]>([]); // 여기에 initial 값 [] 를 안주면 IMember[]|undefined 돼서 할당이 안되네
+
   const [postsPerPage] = useState<number>(10);
+  const [pageLimit] = useState<number>(10);
+
+  const [pageNumbers, setPageNumbers] = useState<number[]>([]);
+  const [maxPageLimit, setMaxPageLimit] = useState<number>(10);
+  const [minPageLimit, setMinPageLimit] = useState<number>(1);
 
   useEffect(() => {
     (async () => {
@@ -16,6 +22,14 @@ const Member = () => {
       setMembers(result);
     })();
   }, []);
+
+  useEffect(() => {
+    const pageNumbers: number[] = [];
+    for (let i = 1; i <= Math.ceil(members.length / postsPerPage); i++) {
+      pageNumbers.push(i);
+    }
+    setPageNumbers(pageNumbers);
+  }, [members]);
 
   useEffect(() => {
     const indexOfLastPost = currentPage * postsPerPage;
@@ -30,7 +44,18 @@ const Member = () => {
   return (
     <Template>
       <MemberComponent members={currentPosts} />
-      <Pagination postsLength={members?.length} postsPerPage={postsPerPage} pageLimit={10} currentPage={currentPage} changePage={changePage} />
+      <Pagination
+        // postsLength={members?.length}
+        // postsPerPage={postsPerPage}
+        pageNumbers={pageNumbers}
+        pageLimit={pageLimit}
+        currentPage={currentPage}
+        changePage={changePage}
+        maxPageLimit={maxPageLimit}
+        minPageLimit={minPageLimit}
+        setMaxPageLimit={setMaxPageLimit}
+        setMinPageLimit={setMinPageLimit}
+      />
     </Template>
   );
 };
