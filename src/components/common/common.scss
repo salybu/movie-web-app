@@ -36,12 +36,22 @@ a {
 
 nav {
   background-color: #f4f6fa;
-  height: 80px;
+  // height: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .nav {
   display: flex;
   justify-content: space-between;
+  height: 80px;
+}
+
+#root {
+  margin-top: 6rem;
 }
 
 .logo {

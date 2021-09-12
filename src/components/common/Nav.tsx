@@ -1,6 +1,6 @@
 import { useSignIn } from 'components/signin';
 import { useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { AUTH } from 'utils/constants';
 import { storage } from 'utils/storage';
 import './common.scss';
@@ -29,7 +29,9 @@ const Nav = () => {
   return (
     <nav>
       <div className='container nav'>
-        <div className='logo'>MovieWeb</div>
+        <Link to='/' className='logo'>
+          MovieWeb
+        </Link>
         <ul className='nav_right nav_signin'>
           {!isLogin ? (
             <>
