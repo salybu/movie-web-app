@@ -27,42 +27,42 @@ const Nav = () => {
   }, [location.pathname]);
 
   return (
-    <div className='container nav'>
-      <div>
-        <div>관리자</div>
+    <nav>
+      <div className='container nav'>
+        <div className='logo'>MovieWeb</div>
+        <ul className='nav_right nav_signin'>
+          {!isLogin ? (
+            <>
+              <li
+                onClick={() => {
+                  movePage('/signin');
+                }}
+              >
+                로그인
+              </li>
+              <li
+                onClick={() => {
+                  movePage('/signup');
+                }}
+              >
+                회원가입
+              </li>
+            </>
+          ) : (
+            <>
+              <li
+                onClick={() => {
+                  movePage('/member');
+                }}
+              >
+                회원 목록
+              </li>
+              <li onClick={logout}>로그아웃</li>
+            </>
+          )}
+        </ul>
       </div>
-      <ul className='nav_right nav_signin'>
-        {!isLogin ? (
-          <>
-            <li
-              onClick={() => {
-                movePage('/signin');
-              }}
-            >
-              로그인
-            </li>
-            <li
-              onClick={() => {
-                movePage('/signup');
-              }}
-            >
-              회원가입
-            </li>
-          </>
-        ) : (
-          <>
-            <li
-              onClick={() => {
-                movePage('/member');
-              }}
-            >
-              회원 목록
-            </li>
-            <li onClick={logout}>로그아웃</li>
-          </>
-        )}
-      </ul>
-    </div>
+    </nav>
   );
 };
 

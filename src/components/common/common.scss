@@ -1,5 +1,20 @@
+@font-face {
+  font-family: 'GothicA1-Regular';
+  src: url('../../fonts/GothicA1-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'KaiseiTokumin-Bold';
+  src: url('../../fonts/KaiseiTokumin-ExtraBold.ttf');
+}
+
 * {
   box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'GothicA1-Regular';
 }
 
 ul {
@@ -19,12 +34,22 @@ a {
   max-width: 1136px;
 }
 
-.nav {
-  background-color: aquamarine;
-
+nav {
+  background-color: #f4f6fa;
   height: 80px;
+}
+
+.nav {
   display: flex;
   justify-content: space-between;
+}
+
+.logo {
+  font-family: 'KaiseiTokumin-Bold';
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 2.3rem;
+  padding: 20px 0;
 }
 
 .nav_right {
@@ -41,7 +66,6 @@ a {
     margin-right: 20px;
     cursor: pointer;
     line-height: 40px;
-    font-weight: 600;
   }
 }
 
@@ -137,6 +161,11 @@ a {
     padding: 0 2rem;
     text-align: right;
     color: #fff;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   & div {
     width: 100%;
