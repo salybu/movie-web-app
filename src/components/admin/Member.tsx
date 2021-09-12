@@ -30,7 +30,7 @@ const Member: React.FC<IMemberProps> = ({ members }): JSX.Element => {
           </thead>
           <tbody>
             {members.map((member) => (
-              <tr>
+              <tr key={member.id}>
                 <td>{member.id}</td>
                 <td>{member.name}</td>
                 <td>{member.level}</td>

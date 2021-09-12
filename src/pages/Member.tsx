@@ -10,9 +10,6 @@ const Member = () => {
   const [currentPosts, setCurrentPosts] = useState<IMember[]>([]); // 여기에 initial 값 [] 를 안주면 IMember[]|undefined 돼서 할당이 안되네
   const [postsPerPage] = useState<number>(10);
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-
   useEffect(() => {
     (async () => {
       const result = await getAllUsers();
@@ -21,13 +18,19 @@ const Member = () => {
   }, []);
 
   useEffect(() => {
-    setCurrentPosts(members.slice(indexOfFirstPost - indexOfLastPost));
-  }, [members]);
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    setCurrentPosts(members.slice(indexOfFirstPost, indexOfLastPost));
+  }, [members, currentPage]);
+
+  const changePage = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <Template>
       <MemberComponent members={currentPosts} />
-      <Pagination postsLength={members?.length} postsPerPage={postsPerPage} />
+      <Pagination postsLength={members?.length} postsPerPage={postsPerPage} pageLimit={10} currentPage={currentPage} changePage={changePage} />
     </Template>
   );
 };
