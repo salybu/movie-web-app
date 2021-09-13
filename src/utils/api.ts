@@ -1,5 +1,5 @@
-import { IMember } from 'components/admin/Member';
 import { firestore } from 'firebase.js';
+import { IMember } from 'types/types';
 
 export const getSignInResult = async (id: string, pw: string) => {
   const usersRef = firestore.collection('users');

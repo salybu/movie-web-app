@@ -1,12 +1,4 @@
-export interface IMember {
-  id: string;
-  pw: string;
-  name: string;
-  level: string;
-  address: string;
-  age: number;
-  cardNumber: number;
-}
+import { IMember } from 'types/types';
 
 export interface IMemberProps {
   members: IMember[];

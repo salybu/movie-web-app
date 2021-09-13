@@ -36,3 +36,13 @@ export interface ISignUp extends ISignIn {
   name: string;
   age: number;
 }
+
+export interface IMember {
+  id: string;
+  pw: string;
+  name: string;
+  level: string;
+  address: string;
+  age: number;
+  cardNumber: number;
+}
