@@ -21,64 +21,72 @@ const Pagination: React.FC<IPaginationProps> = ({
   minMemberLimitByPage,
 }) => {
   return (
-    <ul style={{ display: 'flex', margin: '0', padding: '0', justifyContent: 'center' }}>
-      <li
-        onClick={() => {
-          changePage(minMemberLimitByPage);
-        }}
-      >
-        <MdFirstPage />
-      </li>
-      {currentPage != 1 ? (
+    <ul className='member_pagination'>
+      <button className='btn_icon'>
         <li
           onClick={() => {
-            handlePrevPage(currentPage - 1);
+            changePage(minMemberLimitByPage);
           }}
         >
-          <MdNavigateBefore />
+          <MdFirstPage />
         </li>
-      ) : (
-        <li>
-          <MdNavigateBefore />
-        </li>
-      )}
+      </button>
+      <button className='btn_icon'>
+        {currentPage != 1 ? (
+          <li
+            onClick={() => {
+              handlePrevPage(currentPage - 1);
+            }}
+          >
+            <MdNavigateBefore />
+          </li>
+        ) : (
+          <li>
+            <MdNavigateBefore />
+          </li>
+        )}
+      </button>
       {pagesList?.map((page) => {
         if (page < maxMemberLimitByPage + 1 && page >= minMemberLimitByPage) {
           return (
-            <li
-              key={page}
+            <button
               onClick={() => {
                 changePage(page);
               }}
-              style={page == currentPage ? { fontWeight: 'bold' } : {}}
             >
-              {page}
-            </li>
+              <li key={page} style={page == currentPage ? { fontWeight: 'bold' } : {}}>
+                {page}
+              </li>
+            </button>
           );
         } else {
           return null;
         }
       })}
-      {currentPage != pagesList.length ? (
+      <button className='btn_icon'>
+        {currentPage != pagesList.length ? (
+          <li
+            onClick={() => {
+              handleNextPage(currentPage + 1);
+            }}
+          >
+            <MdNavigateNext />
+          </li>
+        ) : (
+          <li>
+            <MdNavigateNext />
+          </li>
+        )}
+      </button>
+      <button className='btn_icon'>
         <li
           onClick={() => {
-            handleNextPage(currentPage + 1);
+            changePage(maxMemberLimitByPage);
           }}
         >
-          <MdNavigateNext />
+          <MdLastPage />
         </li>
-      ) : (
-        <li>
-          <MdNavigateNext />
-        </li>
-      )}
-      <li
-        onClick={() => {
-          changePage(maxMemberLimitByPage);
-        }}
-      >
-        <MdLastPage />
-      </li>
+      </button>
     </ul>
   );
 };

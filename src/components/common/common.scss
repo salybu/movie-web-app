@@ -150,7 +150,8 @@ nav {
 }
 
 .member_page {
-  margin: 60px 30px;
+  margin: 2rem 0 1.5rem;
+  padding-top: 1rem;
   text-align: center;
 
   & table {
@@ -237,5 +238,45 @@ nav {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+}
+
+ul.movie_list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 1rem;
+  & li {
+    text-decoration: none;
+    width: 23rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+}
+
+ul.member_pagination {
+  display: flex;
+  margin: 0;
+  margin-bottom: 2rem;
+  padding: 0;
+  justify-content: center;
+
+  & button {
+    // @include button;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    background-color: #fff;
+    font-size: 1rem;
+
+    & svg {
+      // line-height: 5rem;
+      margin-top: 0.2rem;
+      font-size: 1.2rem;
+    }
+  }
+
+  & button.btn_icon {
+    padding: 0;
   }
 }
