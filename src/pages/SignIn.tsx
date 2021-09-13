@@ -1,7 +1,7 @@
 import { Redirect } from 'react-router-dom';
 import { useSignIn } from 'components/signin';
 
-function SignIn() {
+const SignIn: React.FC = (): JSX.Element => {
   const { signIn, isLogin, handleChange, handleSubmit } = useSignIn();
 
   if (isLogin) {
@@ -20,6 +20,6 @@ function SignIn() {
       </div>
     </div>
   );
-}
+};
 
 export default SignIn;

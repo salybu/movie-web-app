@@ -41,14 +41,14 @@ const Nav = () => {
                   movePage('/signin');
                 }}
               >
-                로그인
+                Sign In
               </li>
               <li
                 onClick={() => {
                   movePage('/signup');
                 }}
               >
-                회원가입
+                Sign Up
               </li>
             </>
           ) : (
@@ -58,9 +58,9 @@ const Nav = () => {
                   movePage('/member');
                 }}
               >
-                회원 목록
+                Member List
               </li>
-              <li onClick={logout}>로그아웃</li>
+              <li onClick={logout}>Sign Out</li>
             </>
           )}
         </ul>
