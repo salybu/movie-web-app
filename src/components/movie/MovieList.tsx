@@ -1,6 +1,7 @@
 import { Movie } from 'types/types';
 import React, { LegacyRef } from 'react';
 import Item from './MovieItem';
+import { Loading } from 'components/common';
 
 interface ListProps {
   movies: Movie[] | null;
@@ -10,16 +11,13 @@ interface ListProps {
 }
 
 const List: React.FC<ListProps> = ({ movies, status, page, target }) => {
-  if (movies?.length === 0) {
-    return <div>영화 목록이 없습니다</div>;
+  if (!movies) {
+    return <Loading />;
   }
 
-  // if (status === Status.Loading) {
-  //   return <div>로딩 중입니다 (스피너)</div>;
-  // }
-
   return (
-    <ul style={{ listStyle: 'none', display: 'flex', flexWrap: 'wrap', padding: '0 20px' }}>
+    // <ul style={{ listStyle: 'none', display: 'flex', flexWrap: 'wrap', padding: '0 20px' }}>
+    <ul className='movie_list'>
       {movies?.map((movie) => (
         <Item id={movie.id} title={movie.title} img={movie.img} year={movie.year} genres={movie.genres} />
       ))}
