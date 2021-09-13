@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 export interface ItemProps {
   id: number;
@@ -10,23 +10,14 @@ export interface ItemProps {
 }
 
 const Item = ({ id, title, img, year, genres }: ItemProps) => {
-  const history = useHistory();
-
-  const moveToMovie = (id: number) => {
-    history.push(`/movie/${id}`);
-  };
-
   return (
-    <li
-      style={{ textDecoration: 'none', width: '365px', textAlign: 'center' }}
-      onClick={() => {
-        moveToMovie(id);
-      }}
-    >
-      <h2>{title}</h2>
-      <img src={img}></img>
-      <div>{year}</div>
-      <div>{genres}</div>
+    <li>
+      <Link to={`/movie/${id}`}>
+        <h2>{title}</h2>
+        <img src={img}></img>
+        <div>{year}</div>
+        <div>{genres}</div>
+      </Link>
     </li>
   );
 };
