@@ -42,6 +42,7 @@ nav {
   left: 0;
   width: 100%;
   margin: 0 auto;
+  z-index: 100;
 }
 
 .nav {
@@ -218,5 +219,23 @@ nav {
       color: #757575;
       border-color: #757575;
     }
+  }
+}
+
+.dim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; // 4개 다 써줘야 한다
+  z-index: 200;
+  background-color: #000;
+  opacity: 0.3;
+
+  & div {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
