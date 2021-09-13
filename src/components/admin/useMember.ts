@@ -45,7 +45,7 @@ export const useMember = () => {
     const indexOfLastPost = currentPage * membersPerPage;
     const indexOfFirstPost = indexOfLastPost - membersPerPage;
     setCurrentMembers(members.slice(indexOfFirstPost, indexOfLastPost));
-  }, [members]);
+  }, [members, currentPage]);
 
   const changePage = (page: number) => {
     setCurrentPage(page);
