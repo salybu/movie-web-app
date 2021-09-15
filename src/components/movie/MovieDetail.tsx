@@ -1,39 +1,41 @@
 import { useEffect, useState } from 'react';
 import { MovieService } from '.';
 import { ItemProps } from './MovieItem';
-import { Template } from 'components/common';
+import { Loading, Template } from 'components/common';
 import { printGenres } from 'utils/movie';
 import { BsHeartFill, BsFillStarFill } from 'react-icons/bs';
 import { MdNotInterested } from 'react-icons/md';
 import { Link, useHistory } from 'react-router-dom';
+import { storage } from 'utils/storage';
+import { getMoviesButtonState, pushMovieButton } from 'utils/api';
+import { USER } from 'utils/constants';
+import { ILiked, IMovie, IMovieId } from 'types/types';
 
-export interface IMovie {
-  title: string;
-  year: number;
-  description: string;
-  coverImg: string;
-  backgroundImg: string;
-  // genres: string[];
-  genres: string;
-  rating: number;
-  runtime: number;
-}
-
-export interface IMovieId {
-  id: number;
-}
+const LIKE = 'like';
+const NOTINTERESTED = 'notInterested';
 
 const MovieDetail: React.FC<IMovieId> = ({ id }) => {
   const [movie, setMovie] = useState<IMovie | null>();
   const [movieList, setMovieList] = useState<ItemProps[]>([]);
 
-  const { location } = useHistory();
-  console.log(location);
+  const [liked, setLiked] = useState<boolean>(false);
+  const [notInterested, setNotInterested] = useState<boolean>(false);
 
-  const serviceMovie = async (id: number) => {
+  const { location } = useHistory();
+
+  useEffect(() => {
+    // setMovie(null);
+    // setMovieList([]);
+    getMovie(id);
+    suggestMovie(id);
+    setPrevMovieState(storage.get(USER), id);
+  }, [location]);
+
+  const getMovie = async (id: number) => {
     const resMovie = await MovieService.getMovie(id);
     const { title, year, medium_cover_image, background_image_original, description_full, genres, rating, runtime } = resMovie.data.movie;
     const movie = {
+      id,
       title,
       year,
       description: description_full,
@@ -60,20 +62,22 @@ const MovieDetail: React.FC<IMovieId> = ({ id }) => {
     setMovieList(movieList);
   };
 
-  // useEffect(() => {
-  //   serviceMovie(id);
-  //   suggestMovie(id);
-  // }, []);
+  const setPrevMovieState = async (memberId: string, id: number) => {
+    const like = await getMoviesButtonState(LIKE, memberId);
+    like?.movie.forEach((movie: ILiked) => {
+      if (movie.id == id) {
+        setLiked(true);
+      }
+    });
+  };
 
-  useEffect(() => {
-    setMovie(null);
-    setMovieList([]);
-    serviceMovie(id);
-    suggestMovie(id);
-  }, [location]);
+  const likeMovie = async (id: number, title: string) => {
+    setLiked(!liked);
+    await pushMovieButton(LIKE, storage.get(USER), id, title, !liked);
+  };
 
   if (!movie || !movieList) {
-    return <Template>로딩 중</Template>;
+    return <Loading />;
   }
 
   return (
@@ -90,20 +94,25 @@ const MovieDetail: React.FC<IMovieId> = ({ id }) => {
           <p>
             <BsFillStarFill /> {movie.rating}
           </p>
-          <p>{movie.runtime} 분</p>
+          <p>{movie.runtime} min</p>
           <p>{movie.genres}</p>
           <p>
-            <button className='like_btn'>
-              <BsHeartFill /> 좋아요
+            <button
+              className={liked ? 'like_btn_active' : 'like_btn'}
+              onClick={() => {
+                likeMovie(Number(movie.id), movie.title);
+              }}
+            >
+              <BsHeartFill /> Like
             </button>
             <button className='not_interested_btn'>
-              <MdNotInterested /> 관심없음
+              <MdNotInterested /> Not Interested
             </button>
           </p>
         </div>
       </article>
       <article className='movie_recommend' style={{ padding: '0 1rem' }}>
-        <h2 style={{ marginBottom: '0' }}>관련 추천 영화</h2>
+        <h2 style={{ marginBottom: '0' }}>Other Recommended Movie</h2>
         <ul style={{ display: 'flex', margin: '0', padding: '0 0 3rem' }}>
           {movieList.map((movie) => (
             <Link to={`/movie/${movie.id}`}>
