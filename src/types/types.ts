@@ -46,3 +46,22 @@ export interface IMember {
   age: number;
   cardNumber: number;
 }
+
+export interface IMovie extends ILiked {
+  year: number;
+  description: string;
+  coverImg: string;
+  backgroundImg: string;
+  // genres: string[];
+  genres: string;
+  rating: number;
+  runtime: number;
+}
+
+export interface IMovieId {
+  id: number;
+}
+
+export interface ILiked extends IMovieId {
+  title: string;
+}
