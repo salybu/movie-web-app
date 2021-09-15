@@ -1,5 +1,5 @@
 import { firestore } from 'firebase.js';
-import { IMember } from 'types/types';
+import { ILiked, IMember } from 'types/types';
 
 export const getSignInResult = async (id: string, pw: string) => {
   const usersRef = firestore.collection('users');
@@ -50,4 +50,51 @@ export const getAllUsers = async () => {
   });
 
   return user as IMember[];
+};
+
+export const getMoviesButtonState = async (type: string, memberId: string) => {
+  const likeRef = firestore.collection(type).doc(memberId);
+
+  return likeRef.get().then((doc) => {
+    return doc.data();
+  });
+};
+
+export const pushMovieButton = async (type: string, memberId: string, id: number, title: string, isLiked: boolean) => {
+  const likeRef = firestore.collection(type).doc(memberId);
+
+  if (!isLiked) {
+    // button false 일 때 > 기존 type(like or notInterested)에서 삭제할 때
+    const result = likeRef.get().then((doc) => {
+      const res = doc.data();
+      return res?.movie.filter((movie: any) => movie.id !== id);
+    });
+
+    likeRef.set({
+      movie: await result,
+    });
+  } else {
+    // type(like or notInterested) 영화 아이템 추가할 때
+    let list: ILiked[] = [];
+    const like = likeRef.get().then((doc) => {
+      const result = doc.data();
+      return result?.movie;
+    });
+
+    if ((await like) !== undefined) {
+      list = list.concat((await like) as ILiked[]);
+      list.push({ id: id, title: title });
+
+      likeRef.set({
+        movie: list,
+      });
+    } else {
+      firestore
+        .collection(type)
+        .doc(memberId)
+        .set({
+          movie: [{ id: id, title: title }],
+        });
+    }
+  }
 };
