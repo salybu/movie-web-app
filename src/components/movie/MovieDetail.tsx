@@ -62,13 +62,21 @@ const MovieDetail: React.FC<IMovieId> = ({ id }) => {
     setMovieList(movieList);
   };
 
-  const setPrevMovieState = async (memberId: string, id: number) => {
+  const setPrevMovieState = (memberId: string, id: number) => {
+    setPrevLiked(memberId, id);
+    setPrevNotInterested(memberId, id);
+  };
+
+  const setPrevLiked = async (memberId: string, id: number) => {
     const like = await getMoviesButtonState(LIKE, memberId);
     like?.movie.forEach((movie: ILiked) => {
       if (movie.id == id) {
         setLiked(true);
       }
     });
+  };
+
+  const setPrevNotInterested = async (memberId: string, id: number) => {
     const notInterested = await getMoviesButtonState(NOTINTERESTED, memberId);
     notInterested?.movie.forEach((movie: ILiked) => {
       if (movie.id == id) {
