@@ -69,11 +69,22 @@ const MovieDetail: React.FC<IMovieId> = ({ id }) => {
         setLiked(true);
       }
     });
+    const notInterested = await getMoviesButtonState(NOTINTERESTED, memberId);
+    notInterested?.movie.forEach((movie: ILiked) => {
+      if (movie.id == id) {
+        setNotInterested(true);
+      }
+    });
   };
 
   const likeMovie = async (id: number, title: string) => {
     setLiked(!liked);
     await pushMovieButton(LIKE, storage.get(USER), id, title, !liked);
+  };
+
+  const notInterestedMovie = async (id: number, title: string) => {
+    setNotInterested(!notInterested);
+    await pushMovieButton(NOTINTERESTED, storage.get(USER), id, title, !notInterested);
   };
 
   if (!movie || !movieList) {
@@ -105,7 +116,12 @@ const MovieDetail: React.FC<IMovieId> = ({ id }) => {
             >
               <BsHeartFill /> Like
             </button>
-            <button className='not_interested_btn'>
+            <button
+              className={notInterested ? 'not_interested_btn_active' : 'not_interested_btn'}
+              onClick={() => {
+                notInterestedMovie(Number(movie.id), movie.title);
+              }}
+            >
               <MdNotInterested /> Not Interested
             </button>
           </p>
