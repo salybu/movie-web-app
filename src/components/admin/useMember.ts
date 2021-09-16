@@ -53,7 +53,7 @@ export const useMember = () => {
 
   const handleNextPage = (page: number) => {
     changePage(page);
-    if (page + 1 > maxMemberLimitByPage) {
+    if (page > maxMemberLimitByPage) {
       setMaxMemberLimitByPage(maxMemberLimitByPage + pageLimit);
       setMinMemberLimitByPage(minMemberLimitByPage + pageLimit);
     }
@@ -61,10 +61,24 @@ export const useMember = () => {
 
   const handlePrevPage = (page: number) => {
     changePage(page);
-    if (page - 1 < minMemberLimitByPage && page != 1) {
+    if (page < minMemberLimitByPage && page != 1) {
       setMaxMemberLimitByPage(maxMemberLimitByPage - pageLimit);
       setMinMemberLimitByPage(minMemberLimitByPage - pageLimit);
     }
+  };
+
+  const handleFirstPage = (currentPage: number, minPageLimit: number) => {
+    console.log(currentPage, '    current Page');
+    console.log(minPageLimit, '      min Page limit');
+    const targetPage = currentPage == minPageLimit ? 1 : minPageLimit;
+    console.log(targetPage, '      target Page');
+    handlePrevPage(targetPage);
+  };
+
+  const handleLastPage = (currentPage: number, maxPageLimit: number) => {
+    const targetPage = currentPage == maxPageLimit ? pagesList.slice(-1)[0] : maxPageLimit;
+    handleNextPage(targetPage);
+    // setCurrentPage(targetPage);
   };
 
   return {
@@ -76,5 +90,7 @@ export const useMember = () => {
     handlePrevPage,
     maxMemberLimitByPage,
     minMemberLimitByPage,
+    handleFirstPage,
+    handleLastPage,
   };
 };

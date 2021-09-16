@@ -9,6 +9,8 @@ export interface IPaginationProps {
   handlePrevPage: (page: number) => void;
   maxMemberLimitByPage: number;
   minMemberLimitByPage: number;
+  handleFirstPage: (currentPage: number, minPageLimit: number) => void;
+  handleLastPage: (currentPage: number, maxPageLimit: number) => void;
 }
 
 const Pagination: React.FC<IPaginationProps> = ({
@@ -19,13 +21,15 @@ const Pagination: React.FC<IPaginationProps> = ({
   handlePrevPage,
   maxMemberLimitByPage,
   minMemberLimitByPage,
+  handleFirstPage,
+  handleLastPage,
 }) => {
   return (
     <ul className='member_pagination'>
       <button className='btn_icon'>
         <li
           onClick={() => {
-            changePage(minMemberLimitByPage);
+            handleFirstPage(currentPage, minMemberLimitByPage);
           }}
         >
           <MdFirstPage />
@@ -81,7 +85,7 @@ const Pagination: React.FC<IPaginationProps> = ({
       <button className='btn_icon'>
         <li
           onClick={() => {
-            changePage(maxMemberLimitByPage);
+            handleLastPage(currentPage, maxMemberLimitByPage);
           }}
         >
           <MdLastPage />

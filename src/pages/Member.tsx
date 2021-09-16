@@ -3,7 +3,18 @@ import { useMember } from 'components/admin/useMember';
 import { Loading, Template } from 'components/common';
 
 const Member: React.FC = (): JSX.Element => {
-  const { currentMembers, currentPage, pagesList, changePage, handleNextPage, handlePrevPage, maxMemberLimitByPage, minMemberLimitByPage } = useMember();
+  const {
+    currentMembers,
+    currentPage,
+    pagesList,
+    changePage,
+    handleNextPage,
+    handlePrevPage,
+    maxMemberLimitByPage,
+    minMemberLimitByPage,
+    handleFirstPage,
+    handleLastPage,
+  } = useMember();
 
   if (!currentMembers || !pagesList) {
     return <Loading />;
@@ -20,6 +31,8 @@ const Member: React.FC = (): JSX.Element => {
         handlePrevPage={handlePrevPage}
         maxMemberLimitByPage={maxMemberLimitByPage}
         minMemberLimitByPage={minMemberLimitByPage}
+        handleFirstPage={handleFirstPage}
+        handleLastPage={handleLastPage}
       />
     </Template>
   );
