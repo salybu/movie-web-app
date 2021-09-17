@@ -19,6 +19,9 @@ const SignUp: React.FC = (): JSX.Element => {
           {input.pwCheck !== '' && (cautions.pwCheck ? <p>비밀번호가 일치합니다</p> : <p className='caution'>비밀번호가 일치하지 않습니다</p>)}
           <input name='name' placeholder='이름' value={input.name} onChange={handleChange} />
           <input name='age' placeholder='나이' value={input.age} onChange={handleChange} />
+          <div>
+            <input name='address' className='input' placeholder='주소' />
+          </div>
           <button>회원가입</button>
         </form>
       </div>
