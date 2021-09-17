@@ -1,4 +1,4 @@
-import MovieContainer from 'components/movie/MovieContainer';
+import { MovieList } from 'components/movie';
 import { Redirect } from 'react-router-dom';
 import { AUTH } from 'utils/constants';
 import { storage } from 'utils/storage';
@@ -12,7 +12,7 @@ function Home() {
 
   return (
     <>
-      <MovieContainer />
+      <MovieList />
     </>
   );
 }
