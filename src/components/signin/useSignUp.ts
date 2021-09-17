@@ -6,25 +6,29 @@ import { signUp } from 'utils/api';
 const initialInput: ISignUp = {
   id: '',
   pw: '',
-  pwConfirm: '',
+  pwCheck: '',
   name: '',
   age: 0,
 };
 
 const useSignUp = () => {
   const [input, setInput] = useState<ISignUp>(initialInput);
+  const [inputAddress, setInputAddress] = useState();
+  const [inputCard, setInputCard] = useState();
   const history = useHistory();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+    value = name == 'id' || name == 'age' ? filterInput(name, value) : value;
     setInput((input) => {
-      if (name == 'age') {
-        const age = Number(value);
-        return { ...input, age: age };
-      } else {
-        return { ...input, [name]: value };
-      }
+      const inputVal = name == 'age' ? Number(value) : value;
+      return { ...input, [name]: inputVal };
     });
+  };
+
+  const filterInput = (name: string, value: string) => {
+    const reg = name == 'age' ? /[^0-9]/g : /[ㄱ-힣~!@#$%^&*()_+|<>?:{}= ]/g;
+    return value.replace(reg, '');
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

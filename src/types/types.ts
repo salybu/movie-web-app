@@ -32,7 +32,7 @@ export interface ISignIn {
 }
 
 export interface ISignUp extends ISignIn {
-  pwConfirm: string;
+  pwCheck: string;
   name: string;
   age: number;
 }
