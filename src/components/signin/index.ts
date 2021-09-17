@@ -1,5 +1,5 @@
-import SignInContainer from './SignInContainer';
+import SignIn from './SignIn';
 import SignInService from './SignInService';
 import useSignIn from './useSignIn';
 
-export { SignInContainer, SignInService, useSignIn };
+export { SignIn, SignInService, useSignIn };
