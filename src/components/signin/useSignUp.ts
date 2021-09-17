@@ -79,7 +79,7 @@ const useSignUp = () => {
     }
   };
 
-  return { input, handleChange, handleSubmit, handlePWChange };
+  return { input, cautions, handleChange, handleSubmit, handlePWChange };
 };
 
 export default useSignUp;
