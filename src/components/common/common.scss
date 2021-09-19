@@ -249,8 +249,7 @@ nav {
   right: 0;
   bottom: 0; // 4개 다 써줘야 한다
   z-index: 200;
-  background-color: #000;
-  opacity: 0.3;
+  background-color: rgba(0, 0, 0, 0.2);
 
   & div {
     position: fixed;

@@ -7,3 +7,10 @@ export const Status = {
 
 export const AUTH = 'auth';
 export const USER = 'user';
+
+export const SIGNUP_MODAL_OPTIONS = {
+  ADDRESS: {
+    width: 600,
+    height: 450,
+  },
+};
