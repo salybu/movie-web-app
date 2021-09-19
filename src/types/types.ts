@@ -37,6 +37,16 @@ export interface ISignUp extends ISignIn {
   age: number;
 }
 
+export interface ISignUpCaution {
+  pw: boolean;
+  pwCheck: boolean;
+}
+
+export interface ISignUpAddress {
+  address: string;
+  addressDetail: string;
+}
+
 export interface IMember {
   id: string;
   pw: string;

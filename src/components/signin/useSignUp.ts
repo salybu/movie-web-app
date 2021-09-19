@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ISignUp } from 'types/types';
+import { ISignUp, ISignUpAddress, ISignUpCaution } from 'types/types';
 import { signUp } from 'utils/api';
 
 const initialInput: ISignUp = {
@@ -11,20 +11,10 @@ const initialInput: ISignUp = {
   age: 0,
 };
 
-export interface ISignUpCaution {
-  pw: boolean;
-  pwCheck: boolean;
-}
-
 const initialCaution: ISignUpCaution = {
   pw: false,
   pwCheck: false,
 };
-
-export interface ISignUpAddress {
-  address: string;
-  addressDetail: string;
-}
 
 const initialAddress: ISignUpAddress = {
   address: '',
