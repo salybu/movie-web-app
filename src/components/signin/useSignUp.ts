@@ -21,11 +21,25 @@ const initialCaution: ISignUpCaution = {
   pwCheck: false,
 };
 
+export interface ISignUpAddress {
+  address: string;
+  addressDetail: string;
+}
+
+const initialAddress: ISignUpAddress = {
+  address: '',
+  addressDetail: '',
+};
+
 const useSignUp = () => {
   const [input, setInput] = useState<ISignUp>(initialInput);
   const [cautions, setCautions] = useState<ISignUpCaution>(initialCaution);
-  const [inputAddress, setInputAddress] = useState();
+  const [inputAddress, setInputAddress] = useState<ISignUpAddress>(initialAddress);
   const [inputCard, setInputCard] = useState();
+
+  const [isAddressVisible, setIsAddressVisible] = useState<boolean>(false);
+  const [isCardVisible, setIsCardVisible] = useState<boolean>(false);
+
   const history = useHistory();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -68,6 +82,11 @@ const useSignUp = () => {
     setCautions({ ...cautions, [name]: isValid });
   };
 
+  const clickAddressBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsAddressVisible(true);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -79,7 +98,7 @@ const useSignUp = () => {
     }
   };
 
-  return { input, cautions, handleChange, handleSubmit, handlePWChange };
+  return { input, cautions, isAddressVisible, setIsAddressVisible, handleChange, handleSubmit, handlePWChange, clickAddressBtn };
 };
 
 export default useSignUp;

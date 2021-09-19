@@ -1,8 +1,8 @@
-import { Template } from 'components/common';
-import { useSignUp } from '.';
+import { Modal, Template } from 'components/common';
+import { Address, useSignUp } from '.';
 
 const SignUp: React.FC = (): JSX.Element => {
-  const { input, cautions, handleChange, handleSubmit, handlePWChange } = useSignUp();
+  const { input, cautions, isAddressVisible, handleChange, handleSubmit, handlePWChange, setIsAddressVisible, clickAddressBtn } = useSignUp();
 
   return (
     <Template>
@@ -21,7 +21,10 @@ const SignUp: React.FC = (): JSX.Element => {
           <input name='age' placeholder='나이' value={input.age} onChange={handleChange} />
           <div>
             <input name='address' className='input' placeholder='주소' />
+            <button onClick={clickAddressBtn}>주소 검색</button>
           </div>
+          <input name='addressDetail' className='input' placeholder='상세주소' />
+          <Modal isVisible={isAddressVisible} setIsVisible={setIsAddressVisible} content={<Address />} />
           <button>회원가입</button>
         </form>
       </div>
