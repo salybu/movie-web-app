@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ISignUp } from 'types/types';
 import { signUp } from 'utils/api';
@@ -64,7 +64,7 @@ const useSignUp = () => {
   };
 
   const handleCautions = (name: string, value: string): void => {
-    const isValid = name == 'pw' ? getReg(name).test(value) : input.pw == input.pwCheck;
+    const isValid = name == 'pw' ? getReg(name).test(value) : input.pw == value;
     setCautions({ ...cautions, [name]: isValid });
   };
 
