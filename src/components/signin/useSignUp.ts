@@ -83,18 +83,52 @@ const useSignUp = () => {
 
   const clickIDExistBtn = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    if (input.id == '') {
-      setToast({ isVisible: true, mode: TOAST_MODE.ALERT, message: 'ID 를 입력하세요 🙎' });
-      return;
+    const isInput = isInputID(input.id);
+    if (isInput) {
+      const result = await isValidID(input.id);
+      result ? sendToast(TOAST_MODE.SUCCESS, '해당 ID 를 사용할 수 있습니다 😄') : sendToast(TOAST_MODE.ALERT, '중복된 ID 가 존재합니다 😅');
     }
+  };
 
-    const result = await isValidID(input.id);
+  const sendToast = (mode: string, message: string): void => {
+    setToast({ isVisible: true, mode, message });
+  };
+
+  const isInputID = (id: string): boolean => {
+    if (id == '') {
+      sendToast(TOAST_MODE.ALERT, 'ID 를 입력하세요 🙎');
+      return false;
+    }
+    return true;
+  };
+
+  const signUpValidation = (): boolean => {
+    let result = false;
+    result = isInputID(input.id);
+
     if (result) {
-      setToast({ isVisible: true, mode: TOAST_MODE.SUCCESS, message: '해당 ID 를 사용할 수 있습니다 😄' });
-    } else {
-      setToast({ isVisible: true, mode: TOAST_MODE.ALERT, message: '중복된 ID 가 존재합니다 😅' });
+      let message = '';
+
+      if (!cautions.pw) {
+        message = 'PW 를 양식에 맞게 입력하세요 🙎';
+      } else if (!cautions.pwCheck) {
+        message = 'PW 확인을 해주세요 🙎';
+      } else if (!input.name) {
+        message = '이름을 입력하세요 🙎';
+      } else if (!input.age || input.age > 100) {
+        message = '나이를 입력하세요 (최대 100세) 🙎';
+      } else if (input.address == '' || input.addressDetail == '') {
+        message = '주소 및 상세주소를 입력하세요 🙎';
+      }
+
+      if (message !== '') {
+        sendToast(TOAST_MODE.ALERT, message);
+        result = false;
+      } else {
+        result = true;
+      }
     }
+    return result;
   };
 
   const clickAddressBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -109,11 +143,15 @@ const useSignUp = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // const result = await signUp(id, pw, name, age, level, cardNum, address);
-    const result = await signUp(input.id, input.pw, input.name, input.age, '새싹', 0, '서울 노원구');
-    if (result) {
-      alert('회원가입 완료되셨습니다');
-      history.push('/signin');
+    const isValid = signUpValidation();
+
+    if (isValid) {
+      // const result = await signUp(id, pw, name, age, level, cardNum, address);
+      const result = await signUp(input.id, input.pw, input.name, input.age, '새싹', 0, '서울 노원구');
+      if (result) {
+        alert('회원가입 완료되셨습니다');
+        history.push('/signin');
+      }
     }
   };
 
