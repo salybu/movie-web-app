@@ -298,3 +298,40 @@ ul.member_pagination {
     padding: 0;
   }
 }
+
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 200;
+
+  & div {
+    background-color: #f6666a;
+    color: #fff;
+    padding: 1rem 2em;
+    border-radius: 0.5rem;
+
+    & p {
+      margin: 0;
+      padding-bottom: 0.7rem;
+      font-size: 1.1rem;
+      clear: both;
+    }
+
+    & button {
+      @include button_signin($width: 40%, $height: auto);
+      border-radius: 0;
+      background-color: #fff;
+      color: black;
+      font-size: 0.7rem;
+      float: right;
+    }
+  }
+}
+
+.toast ::after {
+  display: block;
+  clear: both;
+  content: '';
+}
