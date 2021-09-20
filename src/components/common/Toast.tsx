@@ -3,14 +3,10 @@ import { createPortal } from 'react-dom';
 export interface IToast {
   isVisible: boolean;
   message: string;
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  close: () => void;
 }
 
-const Toast: React.FC<IToast> = ({ isVisible, setIsVisible, message }): JSX.Element => {
-  const close = () => {
-    setIsVisible(false);
-  };
-
+const Toast: React.FC<IToast> = ({ isVisible, close, message }): JSX.Element => {
   return isVisible ? (
     createPortal(
       <div className='toast' onClick={close}>

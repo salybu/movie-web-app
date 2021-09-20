@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ISignUp, ISignUpAddress, ISignUpCaution } from 'types/types';
-import { signUp } from 'utils/api';
+import { ISignUp, ISignUpAddress, ISignUpCaution, IToastState } from 'types/types';
+import { isValidID, signUp } from 'utils/api';
 
 const initialInput: ISignUp = {
   id: '',
@@ -21,6 +21,11 @@ const initialAddress: ISignUpAddress = {
   addressDetail: '',
 };
 
+const initialToast: IToastState = {
+  isVisible: false,
+  message: '',
+};
+
 const useSignUp = () => {
   const [input, setInput] = useState<ISignUp>(initialInput);
   const [cautions, setCautions] = useState<ISignUpCaution>(initialCaution);
@@ -29,6 +34,8 @@ const useSignUp = () => {
 
   const [isAddressVisible, setIsAddressVisible] = useState<boolean>(false);
   const [isCardVisible, setIsCardVisible] = useState<boolean>(false);
+
+  const [toast, setToast] = useState<IToastState>(initialToast);
 
   const history = useHistory();
 
@@ -72,9 +79,24 @@ const useSignUp = () => {
     setCautions({ ...cautions, [name]: isValid });
   };
 
+  const clickIDExistBtn = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (input.id == '') {
+      setToast({ isVisible: true, message: '다시 입력하세요 😄' });
+      return;
+    }
+    const result = await isValidID(input.id);
+
+    console.log(result);
+  };
+
   const clickAddressBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsAddressVisible(true);
+  };
+
+  const closeToast = (): void => {
+    setToast({ ...toast, isVisible: false });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -88,7 +110,19 @@ const useSignUp = () => {
     }
   };
 
-  return { input, cautions, isAddressVisible, setIsAddressVisible, handleChange, handleSubmit, handlePWChange, clickAddressBtn };
+  return {
+    input,
+    cautions,
+    toast,
+    isAddressVisible,
+    closeToast,
+    setIsAddressVisible,
+    handleChange,
+    handleSubmit,
+    handlePWChange,
+    clickAddressBtn,
+    clickIDExistBtn,
+  };
 };
 
 export default useSignUp;

@@ -1,8 +1,20 @@
-import { Modal, Template } from 'components/common';
+import { Modal, Template, Toast } from 'components/common';
 import { Address, useSignUp } from '.';
 
 const SignUp: React.FC = (): JSX.Element => {
-  const { input, cautions, isAddressVisible, handleChange, handleSubmit, handlePWChange, setIsAddressVisible, clickAddressBtn } = useSignUp();
+  const {
+    input,
+    cautions,
+    toast,
+    isAddressVisible,
+    closeToast,
+    setIsAddressVisible,
+    handleChange,
+    handleSubmit,
+    handlePWChange,
+    clickAddressBtn,
+    clickIDExistBtn,
+  } = useSignUp();
 
   return (
     <Template>
@@ -11,7 +23,7 @@ const SignUp: React.FC = (): JSX.Element => {
           <h2>Sign Up</h2>
           <div>
             <input name='id' className='input' placeholder='아이디' value={input.id} onChange={handleChange} />
-            <button>아이디 중복확인</button>
+            <button onClick={clickIDExistBtn}>아이디 중복확인</button>
           </div>
           <input name='pw' type='password' placeholder='비밀번호' value={input.pw} autoComplete='new-password' onChange={handlePWChange} />
           {input.pw !== '' && (cautions.pw ? <p>비밀번호 양식에 맞게 입력하였습니다</p> : <p className='caution'>영문 및 숫자 포함 8 ~ 10자 작성해주세요</p>)}
@@ -27,6 +39,7 @@ const SignUp: React.FC = (): JSX.Element => {
           <Modal isVisible={isAddressVisible} setIsVisible={setIsAddressVisible} content={<Address />} />
           <button>회원가입</button>
         </form>
+        <Toast isVisible={toast.isVisible} close={closeToast} message={toast.message} />
       </div>
     </Template>
   );
