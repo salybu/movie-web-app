@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ISignUp, ISignUpAddress, ISignUpCaution, IToastState } from 'types/types';
+import { ISignUp, ISignUpCaution, IToastState } from 'types/types';
 import { isValidID, signUp } from 'utils/api';
 import { TOAST_MODE } from 'utils/constants';
 
@@ -10,16 +10,13 @@ const initialInput: ISignUp = {
   pwCheck: '',
   name: '',
   age: 0,
+  address: '',
+  addressDetail: '',
 };
 
 const initialCaution: ISignUpCaution = {
   pw: false,
   pwCheck: false,
-};
-
-const initialAddress: ISignUpAddress = {
-  address: '',
-  addressDetail: '',
 };
 
 const initialToast: IToastState = {
@@ -31,7 +28,6 @@ const initialToast: IToastState = {
 const useSignUp = () => {
   const [input, setInput] = useState<ISignUp>(initialInput);
   const [cautions, setCautions] = useState<ISignUpCaution>(initialCaution);
-  const [inputAddress, setInputAddress] = useState<ISignUpAddress>(initialAddress);
   const [inputCard, setInputCard] = useState();
 
   const [isAddressVisible, setIsAddressVisible] = useState<boolean>(false);
@@ -74,6 +70,10 @@ const useSignUp = () => {
     let { name, value } = e.target;
     setInputVal(name, value);
     handleCautions(name, value);
+  };
+
+  const setAddress = (address: string): void => {
+    setInput({ ...input, address });
   };
 
   const handleCautions = (name: string, value: string): void => {
@@ -124,6 +124,7 @@ const useSignUp = () => {
     isAddressVisible,
     closeToast,
     setIsAddressVisible,
+    setAddress,
     handleChange,
     handleSubmit,
     handlePWChange,

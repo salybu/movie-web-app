@@ -1,4 +1,4 @@
-import { Modal, Template, Toast } from 'components/common';
+import { Template, Toast } from 'components/common';
 import { Address, useSignUp } from '.';
 
 const SignUp: React.FC = (): JSX.Element => {
@@ -9,6 +9,7 @@ const SignUp: React.FC = (): JSX.Element => {
     isAddressVisible,
     closeToast,
     setIsAddressVisible,
+    setAddress,
     handleChange,
     handleSubmit,
     handlePWChange,
@@ -22,7 +23,7 @@ const SignUp: React.FC = (): JSX.Element => {
         <form className='container_signin_narrow sign_up_form' onSubmit={handleSubmit}>
           <h2>Sign Up</h2>
           <div>
-            <input name='id' className='input' placeholder='아이디' value={input.id} onChange={handleChange} />
+            <input name='id' placeholder='아이디' value={input.id} onChange={handleChange} />
             <button onClick={clickIDExistBtn}>아이디 중복확인</button>
           </div>
           <input name='pw' type='password' placeholder='비밀번호' value={input.pw} autoComplete='new-password' onChange={handlePWChange} />
@@ -32,11 +33,11 @@ const SignUp: React.FC = (): JSX.Element => {
           <input name='name' placeholder='이름' value={input.name} onChange={handleChange} />
           <input name='age' placeholder='나이' value={input.age} onChange={handleChange} />
           <div>
-            <input name='address' className='input' placeholder='주소' />
+            <input name='address' placeholder='주소' value={input.address} />
             <button onClick={clickAddressBtn}>주소 검색</button>
           </div>
-          <input name='addressDetail' className='input' placeholder='상세주소' />
-          <Modal isVisible={isAddressVisible} setIsVisible={setIsAddressVisible} content={<Address />} />
+          <input name='addressDetail' placeholder='상세주소' value={input.addressDetail} onChange={handleChange} />
+          <Address setAddress={setAddress} setIsVisible={setIsAddressVisible} isVisible={isAddressVisible} />
           <button>회원가입</button>
         </form>
         <Toast isVisible={toast.isVisible} mode={toast.mode} message={toast.message} close={closeToast} />

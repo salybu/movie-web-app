@@ -3,7 +3,13 @@ import DaumPostcode from 'react-daum-postcode';
 import { Modal } from 'components/common';
 import { SIGNUP_MODAL_OPTIONS } from 'utils/constants';
 
-const Address: React.FC = (): JSX.Element => {
+export interface IAddress {
+  isVisible: boolean;
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setAddress: (address: string) => void;
+}
+
+const Address: React.FC<IAddress> = ({ isVisible, setAddress, setIsVisible }): JSX.Element => {
   const handleComplete = (data: any) => {
     let fullAddress = data.address;
     let extraAddress = '';
@@ -18,10 +24,17 @@ const Address: React.FC = (): JSX.Element => {
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
 
-    console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+    setAddress(fullAddress);
+    setIsVisible(false);
   };
 
-  return <DaumPostcode onComplete={handleComplete} width={SIGNUP_MODAL_OPTIONS.ADDRESS.width} height={SIGNUP_MODAL_OPTIONS.ADDRESS.height} autoClose />;
+  return (
+    <Modal
+      isVisible={isVisible}
+      setIsVisible={setIsVisible}
+      content={<DaumPostcode onComplete={handleComplete} width={SIGNUP_MODAL_OPTIONS.ADDRESS.width} height={SIGNUP_MODAL_OPTIONS.ADDRESS.height} autoClose />}
+    />
+  );
 };
 
 export default Address;

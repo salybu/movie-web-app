@@ -35,16 +35,13 @@ export interface ISignUp extends ISignIn {
   pwCheck: string;
   name: string;
   age: number;
+  address: string;
+  addressDetail: string;
 }
 
 export interface ISignUpCaution {
   pw: boolean;
   pwCheck: boolean;
-}
-
-export interface ISignUpAddress {
-  address: string;
-  addressDetail: string;
 }
 
 export interface IMember {
