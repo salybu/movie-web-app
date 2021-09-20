@@ -14,3 +14,8 @@ export const SIGNUP_MODAL_OPTIONS = {
     height: 450,
   },
 };
+
+export const TOAST_MODE = {
+  SUCCESS: 'toast_success',
+  ALERT: 'toast_alert',
+};

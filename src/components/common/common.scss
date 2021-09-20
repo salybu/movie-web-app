@@ -307,7 +307,6 @@ ul.member_pagination {
   z-index: 200;
 
   & div {
-    background-color: #f6666a;
     color: #fff;
     padding: 1rem 2em;
     border-radius: 0.5rem;
@@ -334,4 +333,12 @@ ul.member_pagination {
   display: block;
   clear: both;
   content: '';
+}
+
+.toast_success {
+  background-color: #a5d25f;
+}
+
+.toast_alert {
+  background-color: #f6666a;
 }

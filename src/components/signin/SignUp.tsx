@@ -39,7 +39,7 @@ const SignUp: React.FC = (): JSX.Element => {
           <Modal isVisible={isAddressVisible} setIsVisible={setIsAddressVisible} content={<Address />} />
           <button>회원가입</button>
         </form>
-        <Toast isVisible={toast.isVisible} close={closeToast} message={toast.message} />
+        <Toast isVisible={toast.isVisible} mode={toast.mode} message={toast.message} close={closeToast} />
       </div>
     </Template>
   );

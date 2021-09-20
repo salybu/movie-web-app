@@ -79,4 +79,5 @@ export interface ILiked extends IMovieId {
 export interface IToastState {
   isVisible: boolean;
   message: string;
+  mode: string;
 }

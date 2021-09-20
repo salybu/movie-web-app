@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ISignUp, ISignUpAddress, ISignUpCaution, IToastState } from 'types/types';
 import { isValidID, signUp } from 'utils/api';
+import { TOAST_MODE } from 'utils/constants';
 
 const initialInput: ISignUp = {
   id: '',
@@ -23,6 +24,7 @@ const initialAddress: ISignUpAddress = {
 
 const initialToast: IToastState = {
   isVisible: false,
+  mode: TOAST_MODE.ALERT,
   message: '',
 };
 
@@ -81,8 +83,9 @@ const useSignUp = () => {
 
   const clickIDExistBtn = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     if (input.id == '') {
-      setToast({ isVisible: true, message: '다시 입력하세요 😄' });
+      setToast({ isVisible: true, mode: TOAST_MODE.ALERT, message: '다시 입력하세요 😄' });
       return;
     }
     const result = await isValidID(input.id);
