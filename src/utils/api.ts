@@ -19,6 +19,17 @@ export const getSignInResult = async (id: string, pw: string) => {
   }
 };
 
+export const isValidID = async (id: string) => {
+  return firestore
+    .collection('users')
+    .where('id', '==', id)
+    .get()
+    .then((snapshot) => {
+      // return snapshot.docs.map((doc) => doc.data());
+      return snapshot.docs.map((doc) => doc.data()).length != 0 ? false : true;
+    });
+};
+
 export const signUp = (id: string, pw: string, name: string, age: number, level: string, cardNumber: number, address: string) => {
   const result = firestore
     .collection('users')

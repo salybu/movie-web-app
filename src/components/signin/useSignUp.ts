@@ -85,12 +85,16 @@ const useSignUp = () => {
     e.preventDefault();
 
     if (input.id == '') {
-      setToast({ isVisible: true, mode: TOAST_MODE.ALERT, message: '다시 입력하세요 😄' });
+      setToast({ isVisible: true, mode: TOAST_MODE.ALERT, message: 'ID 를 입력하세요 🙎' });
       return;
     }
-    const result = await isValidID(input.id);
 
-    console.log(result);
+    const result = await isValidID(input.id);
+    if (result) {
+      setToast({ isVisible: true, mode: TOAST_MODE.SUCCESS, message: '해당 ID 를 사용할 수 있습니다 😄' });
+    } else {
+      setToast({ isVisible: true, mode: TOAST_MODE.ALERT, message: '중복된 ID 가 존재합니다 😅' });
+    }
   };
 
   const clickAddressBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
