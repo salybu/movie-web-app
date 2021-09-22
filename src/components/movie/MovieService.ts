@@ -8,7 +8,6 @@ export default class MovieService {
       const data = response.json();
       return data;
     } catch (error) {
-      // error Alert 를 띄우던지 어쩌던지
       return null;
     }
   }

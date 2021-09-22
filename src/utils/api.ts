@@ -47,7 +47,7 @@ export const signUp = (id: string, pw: string, name: string, age: number, level:
       return true;
     })
     .catch((error) => {
-      console.log('Error adding document: ', error);
+      // console.log('Error adding document: ', error);
       return false;
     });
   return result;
