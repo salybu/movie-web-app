@@ -24,12 +24,17 @@ const MovieDetail: React.FC<IMovieId> = ({ id }) => {
   const { location } = useHistory();
 
   useEffect(() => {
-    // setMovie(null);
-    // setMovieList([]);
-    getMovie(id);
-    suggestMovie(id);
-    setPrevMovieState(storage.get(USER), id);
+    setMovie(null);
+    setMovieList([]);
   }, [location]);
+
+  useEffect(() => {
+    if (movie == null) {
+      getMovie(id);
+      suggestMovie(id);
+      setPrevMovieState(storage.get(USER), id);
+    }
+  }, [movie]);
 
   const getMovie = async (id: number) => {
     const resMovie = await MovieService.getMovie(id);
