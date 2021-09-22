@@ -147,9 +147,9 @@ const useSignUp = () => {
 
     if (isValid) {
       // const result = await signUp(id, pw, name, age, level, cardNum, address);
-      const result = await signUp(input.id, input.pw, input.name, input.age, '새싹', 0, '서울 노원구');
+      const result = await signUp(input.id, input.pw, input.name, input.age, '새싹', 0, input.address + input.addressDetail);
       if (result) {
-        alert('회원가입 완료되셨습니다');
+        sendToast(TOAST_MODE.SUCCESS, '회원가입 완료되었습니다 😄');
         history.push('/signin');
       }
     }
