@@ -10,6 +10,14 @@ const Member: React.FC<IMemberProps> = ({ members }): JSX.Element => {
       <div className='member_page'>
         <h2>회원 목록</h2>
         <table>
+          <colgroup>
+            <col width='10%' />
+            <col width='10%' />
+            <col width='10%' />
+            <col width='40%' />
+            <col width='10%' />
+            <col width='10%' />
+          </colgroup>
           <thead>
             <tr>
               <th>아이디</th>
