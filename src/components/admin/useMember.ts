@@ -9,12 +9,12 @@ export const useMember = () => {
 
   const membersPerPage = 10; // 한 페이지 당 멤버 수
   const pageLimit = 10; // 한 번에 보일 페이지 수
-  //   const [membersPerPage] = useState<number>(10); // 한 페이지 당 멤버 수
-  //   const [pagesPerUnit] = useState<number>(10); // 한 번에 보일 페이지 수
 
   const [pagesList, setPagesList] = useState<number[]>([]); // 전체 멤버 수에 따른 페이지 수
   const [maxMemberLimitByPage, setMaxMemberLimitByPage] = useState<number>(membersPerPage);
   const [minMemberLimitByPage, setMinMemberLimitByPage] = useState<number>(1);
+
+  const lastPage = pagesList.slice(-1)[0];
 
   useEffect(() => {
     getAllMembers();
@@ -53,32 +53,45 @@ export const useMember = () => {
 
   const handleNextPage = (page: number) => {
     changePage(page);
-    if (page > maxMemberLimitByPage) {
-      setMaxMemberLimitByPage(maxMemberLimitByPage + pageLimit);
-      setMinMemberLimitByPage(minMemberLimitByPage + pageLimit);
-    }
   };
 
   const handlePrevPage = (page: number) => {
     changePage(page);
-    if (page < minMemberLimitByPage && page != 1) {
-      setMaxMemberLimitByPage(maxMemberLimitByPage - pageLimit);
-      setMinMemberLimitByPage(minMemberLimitByPage - pageLimit);
-    }
   };
 
+  useEffect(() => {
+    if (currentPage > maxMemberLimitByPage) {
+      const plusPage = maxMemberLimitByPage + pageLimit > lastPage ? lastPage : maxMemberLimitByPage + pageLimit;
+      setMaxMemberLimitByPage(plusPage);
+      setMinMemberLimitByPage(minMemberLimitByPage + pageLimit);
+    } else if (currentPage < minMemberLimitByPage) {
+      const maxPage = maxMemberLimitByPage % pageLimit == 0 ? maxMemberLimitByPage - pageLimit : maxMemberLimitByPage - (maxMemberLimitByPage % pageLimit);
+      setMaxMemberLimitByPage(maxPage);
+      setMinMemberLimitByPage(minMemberLimitByPage - pageLimit);
+    }
+  }, [currentPage]);
+
   const handleFirstPage = (currentPage: number, minPageLimit: number) => {
-    console.log(currentPage, '    current Page');
-    console.log(minPageLimit, '      min Page limit');
-    const targetPage = currentPage == minPageLimit ? 1 : minPageLimit;
-    console.log(targetPage, '      target Page');
-    handlePrevPage(targetPage);
+    if (currentPage == 1) {
+      return;
+    }
+
+    const targetPage = currentPage == minPageLimit ? currentPage - pageLimit : minPageLimit;
+    setCurrentPage(targetPage);
   };
 
   const handleLastPage = (currentPage: number, maxPageLimit: number) => {
-    const targetPage = currentPage == maxPageLimit ? pagesList.slice(-1)[0] : maxPageLimit;
-    handleNextPage(targetPage);
-    // setCurrentPage(targetPage);
+    if (currentPage == lastPage) {
+      return;
+    }
+
+    const lastMaxPageLimit = getLastMaxPageLimit(currentPage);
+    const targetPage = currentPage == maxPageLimit ? lastMaxPageLimit : maxPageLimit;
+    setCurrentPage(targetPage);
+  };
+
+  const getLastMaxPageLimit = (currentPage: number): number => {
+    return lastPage < currentPage + pageLimit ? lastPage : currentPage + pageLimit;
   };
 
   return {
