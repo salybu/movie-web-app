@@ -1,3 +1,4 @@
+import 'intersection-observer'; // for IE
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovies, selectMovies } from 'redux/modules/movies';
