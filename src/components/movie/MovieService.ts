@@ -1,4 +1,4 @@
-const MOVIE_API_URL = 'https://yts.mx/api/v2/';
+const MOVIE_API_URL = 'https://yts.torrentbay.to/api/v2/';
 
 export default class MovieService {
   public static async getMovies(page: number) {
